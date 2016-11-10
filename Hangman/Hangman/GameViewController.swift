@@ -16,8 +16,10 @@ extension UILabel {
 }
 class GameViewController: UIViewController {
 
+    @IBOutlet var UIarray: UILabel!
     @IBAction func UInewGame(_ sender: AnyObject) {
         UIguess.isUserInteractionEnabled = true
+        UIarray.text = ""
         newPhrase = ""
         guessedResult = ""
         UIhangman.image = UIImage(named: "hangman1.gif")
@@ -58,6 +60,7 @@ class GameViewController: UIViewController {
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 
                 self.present(alert, animated: true, completion: nil)
+                self.UIguess.text = ""
                 UIguess.isUserInteractionEnabled = false
 
             }
@@ -93,6 +96,15 @@ class GameViewController: UIViewController {
                     
                     self.present(alert, animated: true, completion: nil)
                     UIguess.isUserInteractionEnabled = false
+                    self.UIguess.text = ""
+                    UIguess.isUserInteractionEnabled = false
+                    
+                }
+                if self.UIarray.text == ""{
+                    self.UIarray.text = self.UIarray.text! +  self.UIguess.text!
+                }
+                else{
+                    self.UIarray.text = self.UIarray.text! + ", " + self.UIguess.text!
                 }
                 
             }
