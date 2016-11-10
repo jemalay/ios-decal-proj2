@@ -7,10 +7,17 @@
 //
 
 import UIKit
-
+extension UILabel {
+    func addCharactersSpacing(spacing:CGFloat, text:String) {
+        let attributedString = NSMutableAttributedString(string: text)
+        attributedString.addAttribute(NSKernAttributeName, value: spacing, range: NSMakeRange(0, text.characters.count))
+        self.attributedText = attributedString
+    }
+}
 class GameViewController: UIViewController {
 
     @IBAction func UInewGame(_ sender: AnyObject) {
+        UIguess.isUserInteractionEnabled = true
         newPhrase = ""
         guessedResult = ""
         UIhangman.image = UIImage(named: "hangman1.gif")
@@ -20,10 +27,9 @@ class GameViewController: UIViewController {
     }
     @IBOutlet var UIhangman: UIImageView!
     @IBOutlet var UIwrong: UILabel!
-    
     @IBAction func UIbutton(_ sender: AnyObject) {
         var lst = Array(newPhrase.characters)
-        if (self.UIguess.text?.characters.count)! > 1{
+        if (self.UIguess.text?.characters.count)! > 1 || self.UIguess.text!.uppercased() < "A" || self.UIguess.text!.uppercased() > "Z"{
             print("Error: can only enter one character")
             let alert = UIAlertController(title: "Error", message: "can only enter one character", preferredStyle: UIAlertControllerStyle.alert)
             
@@ -91,6 +97,8 @@ class GameViewController: UIViewController {
                 
             }
             self.UIword?.text = guessedResult
+            self.UIword.addCharactersSpacing(spacing: 5, text: guessedResult)
+
         }
     }
     
@@ -98,6 +106,9 @@ class GameViewController: UIViewController {
     var guessedResult = ""
     
     @IBOutlet var UIword: UILabel!
+    
+    
+    
     @IBOutlet var UIguess: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,8 +131,12 @@ class GameViewController: UIViewController {
             }
         }
         newPhrase = phrase!
-        self.UIword?.text = guessedResult
         
+        
+        
+        self.UIword?.text = guessedResult
+        self.UIword.addCharactersSpacing(spacing: 5, text: guessedResult)
+
        
     }
 
